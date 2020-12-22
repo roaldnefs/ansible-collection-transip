@@ -1,0 +1,18 @@
+---
+namespace: roaldnefs
+name: transip
+version: 0.1.0
+readme: README.md
+authors:
+  - Roald Nefs (github/roaldnefs)
+description: TransIP Ansible Collection.
+license_file: COPYING
+tags:
+  - transip
+  - cloud
+repository: https://github.com/roaldnefs/transip-ansible-collection
+#documentation: https://github.com/roaldnefs/transip-ansible-collection/tree/main/docs
+homepage: https://github.com/roaldnefs/transip-ansible-collection
+issues: https://github.com/roaldnefs/transip-ansible-collection/issues
+build_ignore:
+  - '*.tar.gz'
