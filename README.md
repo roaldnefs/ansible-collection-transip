@@ -92,7 +92,7 @@ See [COPYING](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
 [transip]: https://www.transip.eu/
 [changelog]: https://github.com/roaldnefs/transip-ansible-collection/blob/main/CHANGELOG.rst
 [ansible-collections-paths]: https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collections-paths
-[ansible-tests]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
+[ansible-test]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
 [ansible-integration-config]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html#integration-config-yml
 [antsibull-changelog]: https://pypi.org/project/antsibull-changelog/
 [ansible-galaxy-transip]: https://galaxy.ansible.com/roaldnefs/transip
