@@ -6,7 +6,7 @@ This collection cotans modules and plugins to assist in automating [TransIP][tra
 
 ## Tested with Ansible
 
-Tested with the current Ansible 2.10 release and the current development version of Ansible. Ansible versions before 2.10 are not supported.
+Tested with the current Ansible 2.9 and 2.10 release and the current development version of Ansible. Ansible versions before 2.9.10 are not supported.
 
 ## Included content
 
