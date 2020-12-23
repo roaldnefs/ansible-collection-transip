@@ -6,24 +6,87 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
+import os
+import json
 from ansible.module_utils.urls import fetch_url
+from ansible.module_utils._text import to_text
+
+
+class Response(object):
+
+    def __init__(self, resp, info):
+        self.body = None
+        if resp:
+            self.body = resp.read()
+        self.info = info
+
+    @property
+    def json(self):
+        if not self.body:
+            return None
+        try:
+            return json.loads(to_text(self.body))
+        except ValueError:
+            return None
+
+    @property
+    def status_code(self):
+        return self.info["status"]
 
 
 class TransIPHelper(object):
+
     def __init__(self, module):
         self.module = module
-        self.baseurl = "https://api.transip.nl/v6/"
-        self.timeout = module.params.get("timeout", 30)
-        self.oauth_token = module.params.get('oauth_token')
-        self.headers = {'Authorization': 'Bearer {0}'.format(self.oauth_token),
-                        'Content-type': 'application/json'}
+        self.baseurl = "https://api.transip.nl/v6"
+        self.timeout = module.params.get("timeout")
+        self.access_token = module.params.get("access_token")
+        self.headers = {"Authorization": "Bearer {0}".format(self.access_token),
+                        "Content-type": "application/json"}
+
+        # Call the simple test resource on the TransIP API to make sure
+        # everything is working
+        response = self.get("api-test")
+        if response.status_code == 401:
+            self.module.fail_json(msg="Failed to login using API token, please verify validity of the API token.")
 
     @staticmethod
     def transip_argument_spec():
-        return dict()
+        return dict(
+            access_token=dict(
+                no_log=True,
+                required=False,
+                aliases=["api_token"]
+            ),
+            timeout=dict(type='int', default=30),
+        )
 
     def send(self, method, path, data=None):
-        url = "{}/{}".format(self.baseurl, path)
+        url = "{0}/{1}".format(self.baseurl, path)
         data = self.module.jsonify(data)
 
-        response, infomation = fetch_url(self.module, url, data=data,headers=self.headers, method=method, timeout=self.timeout)
+        resp, info = fetch_url(
+            self.module,
+            url,
+            data=data,
+            headers=self.headers,
+            method=method,
+            timeout=self.timeout
+        )
+
+        return Response(resp, info)
+
+    def get(self, path, data=None):
+        return self.send("GET", path, data)
+
+    def post(self, path, data=None):
+        return self.send("POST", path, data)
+
+    def put(self, path, data=None):
+        return self.send("PUT", path, data)
+
+    def patch(self, path, data=None):
+        return self.send("PATCH", path, data)
+
+    def DELETE(self, path, data=None):
+        return self.send("DELETE", path, data)
