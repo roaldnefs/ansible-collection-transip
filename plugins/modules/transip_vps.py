@@ -245,7 +245,7 @@ def main():
     except TransIPVPSException as exc:
         module.fail_json(msg=str(exc), exception=traceback.format_exc())
     except KeyError as exc:
-        module.fail_json(msg='Unable to load {}'.format(str(exc)), exception=traceback.format_exc())
+        module.fail_json(msg='Unable to load {0}'.format(str(exc)), exception=traceback.format_exc())
 
 
 if __name__ == "__main__":
