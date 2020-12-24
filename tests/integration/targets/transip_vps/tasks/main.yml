@@ -1,0 +1,6 @@
+---
+- block:
+  - name: Test API key is provided.
+    fail:
+      msg: transip_access_token should be defined in integration_config.yml
+    when: transip_access_token is not defined
