@@ -10,6 +10,8 @@ Tested with the current Ansible 2.9 and 2.10 release and the current development
 
 ## Included content
 
+- [transip_vps](https://docs.ansible.com/ansible/2.10/collections/roaldnefs/transip/transip_vps_module.html) – Create and delete a TransIP VPS
+
 ## Installation and Usage
 
 ### Installing the Collection from Ansible Galaxy
@@ -29,7 +31,7 @@ collections:
 
 ### Using modules from the TransIP Collection in your playbooks
 
-It's preferable to use content in this collection using their Fully Qualified Collection Namespace (FQCN), for example: `roaldnefs.transip.transip_FIXME`:
+It's preferable to use content in this collection using their Fully Qualified Collection Namespace (FQCN), for example: `roaldnefs.transip.transip_vps`:
 
 ```yaml
 ---
@@ -38,8 +40,14 @@ It's preferable to use content in this collection using their Fully Qualified Co
   connection: local
 
   task:
-    - name: FIXME
-      roaldnefs.transip.transip_FIXME:
+    - name: Create a new VPS
+      roaldnefs.transip.transip_vps:
+        state: present
+        description: "example vps description"
+        unique_description: yes
+        product_name: vps-bladevps-x1
+        operating_system: ubuntu-18.04
+        access_token: REDACTED
       register: result
 ```
 
