@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/roaldnefs/ansible-collection-transip/workflows/CI/badge.svg?event=push)](https://github.com/roaldnefs/ansible-collection-transip/actions)
 
-This collection cotans modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible
+This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible
 
 ## Tested with Ansible
 
