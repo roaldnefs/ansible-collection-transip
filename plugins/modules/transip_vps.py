@@ -130,7 +130,8 @@ class TransIPVPS(object):
         response = self.rest.get(path)
 
         if response.status_code == 200:
-            response.json.get("vpss", [])
+            return response.json.get("vpss", [])
+
         return []
 
     def get(self):
@@ -185,9 +186,14 @@ class TransIPVPS(object):
         response = self.rest.post(path, data=data)
 
         if response.status_code == 201:
-            # json_data = self.get()
-            json_data = self.get_by_name("transipdemo-vps")
-            vps_data = {"vps": json_data.get("vps")}
+            # Retrieve data about the newly created VPS, as the TransIP doens't
+            # provide any information on the creation of the VPS
+            json_data = self.get()
+            # When using the demo access token, the API doesn't actually create
+            # the VPS so the json_data might be empty
+            vps_data = {"vps": {}}
+            if json_data:
+                vps_data["vps"] = json_data["vps"]
             self.module.exit_json(changed=True, data=vps_data)
         else:
             json_data = response.json

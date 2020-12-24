@@ -1,6 +1,29 @@
 ---
-- block:
-  - name: Test API key is provided.
-    fail:
-      msg: transip_access_token should be defined in integration_config.yml
-    when: transip_access_token is not defined
+- name: Test API key is provided.
+  fail:
+    msg: transip_access_token should be defined in integration_config.yml
+  when: transip_access_token is not defined
+
+- name: Create a new VPS
+  transip_vps:
+    state: present
+    description: "example vps description"
+    unique_description: yes
+    product_name: vps-bladevps-x1
+    operating_system: ubuntu-18.04
+    access_token: "{{ transip_access_token }}"
+  register: create_vps
+
+- name: Create a new VPS for idempotency
+  transip_vps:
+    state: present
+    name: transipdemo-vps
+    product_name: vps-bladevps-x1
+    operating_system: FreeBSD 10.0-RELEASE
+    access_token: "{{ transip_access_token }}"
+  register: create_vps_idempotent
+
+- assert:
+    that:
+      - create_vps.changed == True
+      - create_vps_idempotent.changed == False
