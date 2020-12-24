@@ -140,3 +140,4 @@ cython_debug/
 # Ansible
 tests/output/
 changelogs/.plugin-cache.yaml
+*.tar.gz
