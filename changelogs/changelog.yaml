@@ -4,3 +4,8 @@ releases:
     changes:
       release_summary: Initial release of the TransIP Collection.
     release_date: '2020-12-23'
+  0.1.1:
+    changes:
+      release_summary: Fix documentation and Ansible Galaxy configuration of the TransIP
+        Collection.
+    release_date: '2020-12-24'

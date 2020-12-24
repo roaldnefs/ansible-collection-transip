@@ -1,7 +1,7 @@
 ---
 namespace: roaldnefs
 name: transip
-version: 0.1.0
+version: 0.1.1
 readme: README.md
 authors:
   - Roald Nefs (github/roaldnefs)
