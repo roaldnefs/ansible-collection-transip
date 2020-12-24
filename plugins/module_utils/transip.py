@@ -87,5 +87,5 @@ class TransIPHelper(object):
     def patch(self, path, data=None):
         return self.send("PATCH", path, data)
 
-    def DELETE(self, path, data=None):
+    def delete(self, path, data=None):
         return self.send("DELETE", path, data)
