@@ -192,12 +192,14 @@ class TransIPVPS(object):
             # When using the demo access token, the API doesn't actually create
             # the VPS so the json_data might be empty
             vps_data = {"vps": {}}
-            if json_data:
+            if json_data and "vps" in json_data:
                 vps_data["vps"] = json_data["vps"]
             self.module.exit_json(changed=True, data=vps_data)
         else:
             json_data = response.json
-            error_msg = json_data.get("error", "Failed to order VPS")
+            error_msg = "Failed to order VPS"
+            if json_data and "error" in json_data:
+                error_msg = json_data.get["error"]
             self.module.fail_json(changed=False, msg=error_msg)
 
     def cancel(self):

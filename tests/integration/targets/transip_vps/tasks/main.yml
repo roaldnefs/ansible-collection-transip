@@ -1,5 +1,5 @@
 ---
-- name: Test API key is provided.
+- name: Test API key is provided
   fail:
     msg: transip_access_token should be defined in integration_config.yml
   when: transip_access_token is not defined
@@ -23,7 +23,16 @@
     access_token: "{{ transip_access_token }}"
   register: create_vps_idempotent
 
+- name: Delete a VPS
+  transip_vps:
+    state: absent
+    name: transipdemo-vps
+    end_time: immediately
+    access_token: "{{ transip_access_token }}"
+  register: delete_vps
+
 - assert:
     that:
       - create_vps.changed == True
+      - delete_vps.changed == True
       - create_vps_idempotent.changed == False
