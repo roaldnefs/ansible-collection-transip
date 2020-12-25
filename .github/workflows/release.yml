@@ -1,14 +1,8 @@
 ---
 name: Release
-# on: 
-#   release:
-#     types:
-#       - created
-on:
-  pull_request:
-  push:
-  schedule:
-    - cron: '0 6 * * *'
+on: 
+  release:
+    types: [published]
 
 env:
   NAMESPACE: roaldnefs
@@ -41,5 +35,4 @@ jobs:
       - name: Publish the collection
         run: |
           shopt -s extglob
-          echo "ansible-galaxy collection publish ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${GITHUB_REF/refs\/tags\/?(v)/}.tar.gz"
- 
+          ansible-galaxy collection publish ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${GITHUB_REF/refs\/tags\/?(v)/}.tar.gz
