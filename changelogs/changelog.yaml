@@ -9,3 +9,15 @@ releases:
       release_summary: Fix documentation and Ansible Galaxy configuration of the TransIP
         Collection.
     release_date: '2020-12-24'
+  0.2.0:
+    changes:
+      bugfixes:
+      - transip_vps - fix retrieval of the API error message when creating a new VPS
+        fails (https://github.com/roaldnefs/ansible-collection-transip/pull/4).
+      major_changes:
+      - transip_sshkey - Add module to manage the SSH Keys in your TransIP account,
+        these can be used to embed into your VPS at the time of its creation (https://github.com/roaldnefs/ansible-collection-transip/issues/2).
+    fragments:
+    - 3-add-transip_sshkey-module.yaml
+    - 4-fix-transip_vps-module.yaml
+    release_date: '2020-12-27'

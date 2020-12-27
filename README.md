@@ -27,7 +27,7 @@ You can also include it in a `requirements.yml` file and install it via `ansible
 ---
 collections:
   - name: roaldnefs.transip
-    version: 0.1.1
+    version: 0.2.0
 ```
 
 ### Using modules from the TransIP Collection in your playbooks
