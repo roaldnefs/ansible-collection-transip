@@ -1,0 +1,34 @@
+---
+- name: Test API key is provided
+  fail:
+    msg: transip_access_token should be defined in integration_config.yml
+  when: transip_access_token is not defined
+
+- name: Create a new SSH key
+  transip_sshkey:
+    state: present
+    ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
+    description: example
+    access_token: "{{ transip_access_token }}"
+  register: create_ssh_key
+
+- name: Create a new SSH key for idempotency
+  transip_sshkey:
+    state: present
+    ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
+    description: example
+    access_token: "{{ transip_access_token }}"
+  register: create_ssh_key_idempotent
+
+- name: Delete a SSH key
+  transip_sshkey:
+    state: absent
+    fingerprint: "79:07:8c:7c:6c:00:b1:e9:44:4a:bf:e4:1a:fa:88:0d"
+    access_token: "{{ transip_access_token }}"
+  register: delete_ssh_key
+
+- assert:
+    that:
+      - create_ssh_key.changed == True
+      - delete_ssh_key.changed == True
+      - create_ssh_key_idempotent.changed == False
