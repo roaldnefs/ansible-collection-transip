@@ -65,10 +65,10 @@ EXAMPLES = r'''
     product_name: vps-bladevps-x1
     operating_system: ubuntu-18.04
     access_token: REDACTED
-  register: my_vps
+  register: result
 
 - debug:
-    msg: "..."
+    msg: "Created new VPS with name {{ result.data.vps.name }}."
 
 - name: Delete a VPS
   roaldnefs.transip.transip_vps:
@@ -186,8 +186,8 @@ class TransIPVPS(object):
         response = self.rest.post(path, data=data)
 
         if response.status_code == 201:
-            # Retrieve data about the newly created VPS, as the TransIP doens't
-            # provide any information on the creation of the VPS
+            # Retrieve data about the newly created VPS, as the TransIP API
+            # doesn't provide any information on the creation of the VPS
             json_data = self.get()
             # When using the demo access token, the API doesn't actually create
             # the VPS so the json_data might be empty
@@ -199,7 +199,7 @@ class TransIPVPS(object):
             json_data = response.json
             error_msg = "Failed to order VPS"
             if json_data and "error" in json_data:
-                error_msg = json_data.get["error"]
+                error_msg = json_data["error"]
             self.module.fail_json(changed=False, msg=error_msg)
 
     def cancel(self):
