@@ -1,0 +1,5 @@
+---
+major_changes:
+  - transip_sshkey - Add module to manage the SSH Keys in your TransIP account,
+    these can be used to embed into your VPS at the time of its creation
+    (https://github.com/roaldnefs/ansible-collection-transip/issues/2).
