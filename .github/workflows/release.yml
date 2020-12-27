@@ -35,4 +35,4 @@ jobs:
       - name: Publish the collection
         run: |
           shopt -s extglob
-          ansible-galaxy collection publish ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${GITHUB_REF/refs\/tags\/?(v)/}.tar.gz
+          ansible-galaxy collection publish --token "${{env.ANSIBLE_GALAXY_TOKEN}}" ./${{env.NAMESPACE}}-${{env.COLLECTION_NAME}}-${GITHUB_REF/refs\/tags\/?(v)/}.tar.gz
