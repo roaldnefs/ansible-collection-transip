@@ -10,6 +10,7 @@ Tested with the current Ansible 2.9 and 2.10 release and the current development
 
 ## Included content
 
+- transip_sshkey – Manage TransIP SSH keys
 - transip_vps – Create and delete a TransIP VPS
 
 ## Installation and Usage
