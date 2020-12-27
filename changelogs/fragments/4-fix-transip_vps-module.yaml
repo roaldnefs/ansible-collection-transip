@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - transip_vps - fix retrieval of the API error message when creating a new VPS
+    fails (https://github.com/roaldnefs/ansible-collection-transip/pull/4).
