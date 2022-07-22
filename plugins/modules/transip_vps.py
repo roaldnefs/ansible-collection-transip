@@ -253,6 +253,7 @@ def main():
         name=dict(type="str"),
         product_name=dict(type="str"),
         operating_system=dict(type="str"),
+        availability_zone=dict(type="str"),
         end_time=dict(choices=["end", "immediately"], default="end"),
         description=dict(type="str"),
         unique_description=dict(type="bool", default=False),
