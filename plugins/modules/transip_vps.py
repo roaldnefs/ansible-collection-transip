@@ -49,6 +49,10 @@ options:
     - The transip availability zone
     type: str
     default: ams0
+  ssh_key:
+    description:
+    - Public ssh key to use for account creating during installation
+    type: str
   end_time:
     description:
     - Indicate when the VPS will be terminated.
@@ -70,6 +74,7 @@ EXAMPLES = r'''
     product_name: vps-bladevps-x1
     operating_system: ubuntu-18.04
     availability_zone: ams0
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAA..."
     access_token: REDACTED
   register: result
 
@@ -189,11 +194,15 @@ class TransIPVPS(object):
         if description:
             data["description"] = description
 
+        sshKey = self.module.params.get("ssh_key")
+        if description:
+            data["sshKeys"] = [ sshKey ]
+
         availabilityZone = self.module.params.get("availability_zone")
         if availabilityZone:
-            data["availability_zone"] = availabilityZone
+            data["availabilityZone"] = availabilityZone
         else:
-          data["availability_zone"] = "ams0"
+          data["availabilityZone"] = "ams0"
 
         response = self.rest.post(path, data=data)
 
@@ -254,6 +263,7 @@ def main():
         product_name=dict(type="str"),
         operating_system=dict(type="str"),
         availability_zone=dict(type="str"),
+        ssh_key=dict(type="str"),
         end_time=dict(choices=["end", "immediately"], default="end"),
         description=dict(type="str"),
         unique_description=dict(type="bool", default=False),
