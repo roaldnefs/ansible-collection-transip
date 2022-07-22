@@ -11,6 +11,7 @@
     unique_description: yes
     product_name: vps-bladevps-x1
     operating_system: ubuntu-18.04
+    availability_zone: ams0
     access_token: "{{ transip_access_token }}"
   register: create_vps
 
@@ -20,6 +21,7 @@
     name: transipdemo-vps
     product_name: vps-bladevps-x1
     operating_system: FreeBSD 10.0-RELEASE
+    availability_zone: ams0
     access_token: "{{ transip_access_token }}"
   register: create_vps_idempotent
 

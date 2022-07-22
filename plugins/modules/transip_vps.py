@@ -44,6 +44,11 @@ options:
     description:
     - The name of the operating system to install, e.g. ubuntu-18.04.
     type: str
+  availability_zone:
+    description:
+    - The transip availability zone
+    type: str
+    default: ams0
   end_time:
     description:
     - Indicate when the VPS will be terminated.
@@ -64,6 +69,7 @@ EXAMPLES = r'''
     unique_description: yes
     product_name: vps-bladevps-x1
     operating_system: ubuntu-18.04
+    availability_zone: ams0
     access_token: REDACTED
   register: result
 
@@ -182,6 +188,12 @@ class TransIPVPS(object):
         description = self.module.params.get("description")
         if description:
             data["description"] = description
+
+        availabilityZone = self.module.params.get("availability_zone")
+        if availabilityZone:
+            data["availability_zone"] = availabilityZone
+        else:
+          data["availability_zone"] = "ams0"
 
         response = self.rest.post(path, data=data)
 

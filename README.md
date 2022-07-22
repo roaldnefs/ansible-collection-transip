@@ -48,6 +48,7 @@ It's preferable to use content in this collection using their Fully Qualified Co
         unique_description: yes
         product_name: vps-bladevps-x1
         operating_system: ubuntu-18.04
+        availability_zone: ams0
         access_token: REDACTED
       register: result
 ```
