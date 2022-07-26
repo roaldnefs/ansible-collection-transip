@@ -195,7 +195,7 @@ class TransIPVPS(object):
             data["description"] = description
 
         sshKey = self.module.params.get("ssh_key")
-        if description:
+        if sshKey:
             data["sshKeys"] = [ sshKey ]
 
         availabilityZone = self.module.params.get("availability_zone")
