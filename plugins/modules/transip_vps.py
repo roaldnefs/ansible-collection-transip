@@ -4,6 +4,9 @@
 # Copyright: (c) 2020, Roald Nefs <info@roaldnefs.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
+from ansible_collections.roaldnefs.transip.plugins.module_utils.transip import TransIPHelper
+from ansible.module_utils.basic import AnsibleModule
+import traceback
 __metaclass__ = type
 
 
@@ -78,8 +81,18 @@ EXAMPLES = r'''
     access_token: REDACTED
   register: result
 
+- name: Get VPS
+  roaldnefs.transip.transip_vps:
+  name: "vps-name"
+  access_token: REDACTED
+  register: vps
+  ignore_errors: true
+  until: result.changed == True
+  retries: 10
+  delay: 5
+
 - debug:
-    msg: "Created new VPS with name {{ result.data.vps.name }}."
+    msg: "Created new VPS with name {{ vps.data.vps.name }}."
 
 - name: Delete a VPS
   roaldnefs.transip.transip_vps:
@@ -119,10 +132,6 @@ data:
     }
   }
 '''
-
-import traceback
-from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.roaldnefs.transip.plugins.module_utils.transip import TransIPHelper
 
 
 class TransIPVPSException(Exception):
@@ -196,13 +205,13 @@ class TransIPVPS(object):
 
         sshKey = self.module.params.get("ssh_key")
         if sshKey:
-            data["sshKeys"] = [ sshKey ]
+            data["sshKeys"] = [sshKey]
 
         availabilityZone = self.module.params.get("availability_zone")
         if availabilityZone:
             data["availabilityZone"] = availabilityZone
         else:
-          data["availabilityZone"] = "ams0"
+            data["availabilityZone"] = "ams0"
 
         response = self.rest.post(path, data=data)
 
@@ -245,20 +254,33 @@ class TransIPVPS(object):
         else:
             self.module.fail_json(changed=False, msg="VPS not found")
 
+    def get_vps(self):
+        """Retrieve vps information."""
+        json_data = self.get()
+        if json_data:
+            self.module.exit_json(changed=True, data=json_data)
+        else:
+            self.module.fail_json(changed=False, msg="VPS not found")
+
 
 def handle_request(module):
     vps = TransIPVPS(module)
     state = module.params["state"]
+    name = module.params.get("name")
+    description = module.params.get("description")
+
     if state == "present":
         vps.create()
     elif state == "absent":
         vps.cancel()
+    elif not state and (name or description):
+        vps.get_vps()
 
 
 def main():
     argument_spec = TransIPHelper.transip_argument_spec()
     argument_spec.update(
-        state=dict(choices=["present", "absent"], default="present"),
+        state=dict(choices=["present", "absent"]),
         name=dict(type="str"),
         product_name=dict(type="str"),
         operating_system=dict(type="str"),
@@ -284,7 +306,8 @@ def main():
     except TransIPVPSException as exc:
         module.fail_json(msg=str(exc), exception=traceback.format_exc())
     except KeyError as exc:
-        module.fail_json(msg='Unable to load {0}'.format(str(exc)), exception=traceback.format_exc())
+        module.fail_json(msg='Unable to load {0}'.format(
+            str(exc)), exception=traceback.format_exc())
 
 
 if __name__ == "__main__":
