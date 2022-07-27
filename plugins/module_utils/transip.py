@@ -31,6 +31,10 @@ class Response(object):
     def status_code(self):
         return self.info["status"]
 
+    @property
+    def debug(self):
+        return to_text(self.info)
+
 
 class TransIPHelper(object):
 
@@ -46,7 +50,8 @@ class TransIPHelper(object):
         # everything is working
         response = self.get("api-test")
         if response.status_code == 401:
-            self.module.fail_json(msg="Failed to login using API token, please verify validity of the API token.")
+            self.module.fail_json(
+                msg="Failed to login using API token, please verify validity of the API token.")
 
     @staticmethod
     def transip_argument_spec():
