@@ -52,6 +52,10 @@ options:
     - The transip availability zone
     type: str
     default: ams0
+  username:
+    description:
+    - Username used for account creating during cloudinit installation (max 32 chars)
+    type: str
   ssh_key:
     description:
     - Public ssh key to use for account creating during installation
@@ -77,6 +81,7 @@ EXAMPLES = r'''
     product_name: vps-bladevps-x1
     operating_system: ubuntu-18.04
     availability_zone: ams0
+    username: test
     ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAA..."
     access_token: REDACTED
   register: result
@@ -207,6 +212,10 @@ class TransIPVPS(object):
         if sshKey:
             data["sshKeys"] = [sshKey]
 
+        username = self.module.params.get("username")
+        if username:
+            data["username"] = username
+
         availabilityZone = self.module.params.get("availability_zone")
         if availabilityZone:
             data["availabilityZone"] = availabilityZone
@@ -262,6 +271,14 @@ class TransIPVPS(object):
         else:
             self.module.fail_json(changed=False, msg="VPS not found")
 
+    def get_list(self):
+        """Retrieve vps information."""
+        json_data = self.list()
+        if json_data:
+            self.module.exit_json(changed=True, data=json_data)
+        else:
+            self.module.fail_json(changed=False, msg="VPS not found")
+
 
 def handle_request(module):
     vps = TransIPVPS(module)
@@ -286,6 +303,7 @@ def main():
         operating_system=dict(type="str"),
         availability_zone=dict(type="str"),
         ssh_key=dict(type="str"),
+        username=dict(type="str"),
         end_time=dict(choices=["end", "immediately"], default="end"),
         description=dict(type="str"),
         unique_description=dict(type="bool", default=False),
