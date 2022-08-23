@@ -4,6 +4,9 @@
 # Copyright: (c) 2020, Roald Nefs <info@roaldnefs.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
+from ansible_collections.yo-han.transip.plugins.module_utils.transip import TransIPHelper
+from ansible.module_utils.basic import AnsibleModule
+import traceback
 __metaclass__ = type
 
 
@@ -34,12 +37,12 @@ options:
     - The SSH key.
     type: str
 extends_documentation_fragment:
-- roaldnefs.transip.transip.documentation
+- yo-han.transip.transip.documentation
 '''
 
 EXAMPLES = r'''
 - name: Create a new SSH key
-  roaldnefs.transip.transip_sshkey:
+  yo-han.transip.transip_sshkey:
     state: present
     ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
     description: example
@@ -49,7 +52,7 @@ EXAMPLES = r'''
     msg: "Added SSH-key with fingerprint {{ result.data.sshKey.fingerprint }}"
 
 - name: Delete a SSH key
-  roaldnefs.transip.transip_sshkey:
+  yo-han.transip.transip_sshkey:
     state: absent
     ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
 '''
@@ -69,11 +72,6 @@ data:
     }
   }
 '''
-
-
-import traceback
-from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.roaldnefs.transip.plugins.module_utils.transip import TransIPHelper
 
 
 class TransIPSSHKeyException(Exception):
@@ -162,7 +160,8 @@ class TransIPSSHKey(object):
         if response.status_code == 204:
             self.module.exit_json(changed=True, msg="SSH-key deleted")
         else:
-            self.module.fail_json(changed=False, msg="Failed to delete SSH-key")
+            self.module.fail_json(
+                changed=False, msg="Failed to delete SSH-key")
 
 
 def handle_request(module):
@@ -199,7 +198,8 @@ def main():
     except TransIPSSHKeyException as exc:
         module.fail_json(msg=str(exc), exception=traceback.format_exc())
     except KeyError as exc:
-        module.fail_json(msg='Unable to load {0}'.format(str(exc)), exception=traceback.format_exc())
+        module.fail_json(msg='Unable to load {0}'.format(
+            str(exc)), exception=traceback.format_exc())
 
 
 if __name__ == "__main__":

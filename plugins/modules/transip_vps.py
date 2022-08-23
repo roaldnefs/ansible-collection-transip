@@ -4,7 +4,8 @@
 # Copyright: (c) 2020, Roald Nefs <info@roaldnefs.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
-from ansible_collections.roaldnefs.transip.plugins.module_utils.transip import TransIPHelper
+from email.policy import default
+from ansible_collections.yo-han.transip.plugins.module_utils.transip import TransIPHelper
 from ansible.module_utils.basic import AnsibleModule
 import traceback
 __metaclass__ = type
@@ -16,7 +17,7 @@ module: transip_vps
 short_description: Create and delete a TransIP VPS
 description:
 - Create and delete a VPS in TransIP.
-author: "Roald Nefs (@roaldnefs)"
+author: "Roald Nefs (@yo-han)"
 options:
   state:
     description:
@@ -69,12 +70,13 @@ options:
     choices: ['end', 'immediately']
     type: str
 extends_documentation_fragment:
-- roaldnefs.transip.transip.documentation
+- yo-han.transip.transip.documentation
 '''
 
 EXAMPLES = r'''
+---
 - name: Create a new VPS
-  roaldnefs.transip.transip_vps:
+  yo-han.transip.transip_vps:
     state: present
     description: "example vps description"
     unique_description: yes
@@ -86,28 +88,29 @@ EXAMPLES = r'''
     access_token: REDACTED
   register: result
 
-- name: Get VPS
-  roaldnefs.transip.transip_vps:
-  name: "vps-name"
-  access_token: REDACTED
-  register: vps
-  ignore_errors: true
-  until: result.changed == True
-  retries: 10
-  delay: 5
+# - name: Get VPS
+#   yo-han.transip.transip_vps:
+#   name: "vps-name"
+#   access_token: REDACTED
+#   register: vps
+#   ignore_errors: true
+#   until: result.changed == True
+#   retries: 10
+#   delay: 5
 
-- debug:
-    msg: "Created new VPS with name {{ vps.data.vps.name }}."
+# - debug:
+#     msg: "Created new VPS with name {{ vps.data.vps.name }}."
 
-- name: Delete a VPS
-  roaldnefs.transip.transip_vps:
-    state: absent
-    name: transipdemo-vps
-    end_time: immediately
-    access_token: REDACTED
+# - name: Delete a VPS
+#   yo-han.transip.transip_vps:
+#     state: absent
+#     name: transipdemo-vps
+#     end_time: immediately
+#     access_token: REDACTED
 '''
 
 RETURN = r'''
+---
 data:
   description: a TransIP VPS
   returned: changed
@@ -297,12 +300,12 @@ def handle_request(module):
 def main():
     argument_spec = TransIPHelper.transip_argument_spec()
     argument_spec.update(
-        state=dict(choices=["present", "absent"]),
+        state=dict(choices=["present", "absent"], default="present"),
         name=dict(type="str"),
         product_name=dict(type="str"),
         operating_system=dict(type="str"),
-        availability_zone=dict(type="str"),
-        ssh_key=dict(type="str"),
+        availability_zone=dict(type="str", default="ams0"),
+        ssh_key=dict(type="str", no_log=True),
         username=dict(type="str"),
         end_time=dict(choices=["end", "immediately"], default="end"),
         description=dict(type="str"),

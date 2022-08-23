@@ -1,19 +1,20 @@
 ---
-namespace: roaldnefs
+namespace: yo-han
 name: transip
-version: 0.2.0
+version: 0.2.1
 readme: README.md
 authors:
   - Roald Nefs (github/roaldnefs)
+  - Johan Kuijt (github/yo-han)
 description: TransIP Ansible Collection.
 license_file: COPYING
 tags:
   - transip
   - cloud
-repository: https://github.com/roaldnefs/ansible-collection-transip
-#documentation: https://github.com/roaldnefs/ansible-collection-transip/tree/main/docs
-homepage: https://github.com/roaldnefs/ansible-collection-transip
-issues: https://github.com/roaldnefs/ansible-collection-transip/issues
+repository: https://github.com/yo-han/ansible-collection-transip
+#documentation: https://github.com/yo-han/ansible-collection-transip/tree/main/docs
+homepage: https://github.com/yo-han/ansible-collection-transip
+issues: https://github.com/yo-han/ansible-collection-transip/issues
 build_ignore:
   - .gitignore
   - changelogs/.plugin-cache.yaml

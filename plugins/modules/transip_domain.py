@@ -5,11 +5,10 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
 from email.policy import default
-from ansible_collections.roaldnefs.transip.plugins.module_utils.transip import TransIPHelper
+from ansible_collections.yo-han.transip.plugins.module_utils.transip import TransIPHelper
 from ansible.module_utils.basic import AnsibleModule
 import traceback
 __metaclass__ = type
-
 
 DOCUMENTATION = r'''
 ---
@@ -42,18 +41,20 @@ options:
     description:
     - DNS entry type (A, AAAA, CNAME, MX, NS, TXT, SRV, SSHFP, TLSA, CAA, NAPTR)
     default: A
+    choices: ["A", "AAAA", "CNAME", "MX", "NS", "TXT", "SRV", "SSHFP", "TLSA", "CAA", "NAPTR"]
     type: str
   content:
     description:
     - The content of the DNS entry. (127.0.0.1 for A, or a domainname for CNAME, etc)
     type: str
 extends_documentation_fragment:
-- roaldnefs.transip.transip.documentation
+- yo-han.transip.transip.documentation
 '''
 
 EXAMPLES = r'''
- - name: Create a new DNS entry
-    roaldnefs.transip.transip_domain:
+---
+- name: Create a new DNS entry
+  yo-han.transip.transip_domain:
     state: present
     domain: "example.com"
     name: "ansible"
@@ -61,13 +62,13 @@ EXAMPLES = r'''
     access_token: REDACTED
     register: domain
 
-- name: Remove a DNS entry
-    roaldnefs.transip.transip_domain:
-    state: absent
-    domain: "example.com"
-    name: "ansible"
-    content: "127.0.0.1"
-    access_token: REDACTED
+# - name: Remove a DNS entry
+#     yo-han.transip.transip_domain:
+#     state: absent
+#     domain: "example.com"
+#     name: "ansible"
+#     content: "127.0.0.1"
+#     access_token: REDACTED
 '''
 
 RETURN = r'''
@@ -205,7 +206,6 @@ def main():
         required_if=([
             ("state", "present", ["domain", "name", "content"]),
             ("state", "absent", ["domain", "name", "content"]),
-            ("unique_description", True, ["description"]),
         ]),
         supports_check_mode=True,
     )

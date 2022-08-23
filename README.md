@@ -1,17 +1,19 @@
 # TransIP Collection
 
-[![CI](https://github.com/roaldnefs/ansible-collection-transip/workflows/CI/badge.svg?event=push)](https://github.com/roaldnefs/ansible-collection-transip/actions)
+[![CI](https://github.com/yo-han/ansible-collection-transip/workflows/CI/badge.svg?event=push)](https://github.com/yo-han/ansible-collection-transip/actions)
 
-This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible
+This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible. It was orignally started by [Roald Nefs](https://github.com/roaldnefs/ansible-collection-transip). This is the forked and expended version of the collection.
 
 ## Tested with Ansible
 
-Tested with the current Ansible 2.9 and 2.10 release and the current development version of Ansible. Ansible versions before 2.9.10 are not supported.
+Tested with the current Ansible 2.13 release and the current development version of Ansible. Ansible versions before 2.9.10 are not supported.
 
 ## Included content
 
 - transip_sshkey – Manage TransIP SSH keys
 - transip_vps – Create and delete a TransIP VPS
+- transip_domain – Create and delete a TransIP DNS entries
+- transip_network – Create and delete a TransIP Private Networks
 
 ## Installation and Usage
 
@@ -19,20 +21,20 @@ Tested with the current Ansible 2.9 and 2.10 release and the current development
 
 Before using the TransIP collection, you need to install it with the Ansible Galaxy CLI:
 
-    ansible-galaxy collection install roaldnefs.transip
+    ansible-galaxy collection install yo-han.transip
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yaml`, using the format:
 
 ```yaml
 ---
 collections:
-  - name: roaldnefs.transip
-    version: 0.2.0
+  - name: yo-han.transip
+    version: 0.2.1
 ```
 
 ### Using modules from the TransIP Collection in your playbooks
 
-It's preferable to use content in this collection using their Fully Qualified Collection Namespace (FQCN), for example: `roaldnefs.transip.transip_vps`:
+It's preferable to use content in this collection using their Fully Qualified Collection Namespace (FQCN), for example: `yo-han.transip.transip_vps`:
 
 ```yaml
 ---
@@ -42,7 +44,7 @@ It's preferable to use content in this collection using their Fully Qualified Co
 
   task:
     - name: Create a new VPS
-      roaldnefs.transip.transip_vps:
+      yo-han.transip.transip_vps:
         state: present
         description: "example vps description"
         unique_description: yes
@@ -100,9 +102,9 @@ GNU General Public License v3.0 or later.
 See [COPYING](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
 
 [transip]: https://www.transip.eu/
-[changelog]: https://github.com/roaldnefs/transip-ansible-collection/blob/main/CHANGELOG.rst
+[changelog]: https://github.com/yo-han/transip-ansible-collection/blob/main/CHANGELOG.rst
 [ansible-collections-paths]: https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collections-paths
 [ansible-test]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
 [ansible-integration-config]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html#integration-config-yml
 [antsibull-changelog]: https://pypi.org/project/antsibull-changelog/
-[ansible-galaxy-transip]: https://galaxy.ansible.com/roaldnefs/transip
+[ansible-galaxy-transip]: https://galaxy.ansible.com/yo-han/transip

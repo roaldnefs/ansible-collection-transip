@@ -1,11 +1,11 @@
 ---
 name: Release
-on: 
+on:
   release:
     types: [published]
 
 env:
-  NAMESPACE: roaldnefs
+  NAMESPACE: yo-han
   COLLECTION_NAME: transip
   ANSIBLE_GALAXY_TOKEN: ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
   ANSIBLE_FORCE_COLOR: 1
