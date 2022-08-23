@@ -65,8 +65,8 @@ The `tests` directory contains configuration for running sanity and integeration
 
 You can run the collection's test suites with the commands:
 
-    ansible-test sanity --docker -v --color
-    ansible-test integration --docker -v --color
+    ansible-test sanity -v --color
+    ansible-test integration -v --color
 
 Note: To run integration tests, you must add an [`integration_config.yml`][ansible-integration-config] file with a valid TransIP API key (using variable `transip_api_key`).
 
