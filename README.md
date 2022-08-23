@@ -21,20 +21,20 @@ Tested with the current Ansible 2.13 release and the current development version
 
 Before using the TransIP collection, you need to install it with the Ansible Galaxy CLI:
 
-    ansible-galaxy collection install yo-han.transip
+    ansible-galaxy collection install yo_han.transip
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yaml`, using the format:
 
 ```yaml
 ---
 collections:
-  - name: yo-han.transip
+  - name: yo_han.transip
     version: 0.3.0
 ```
 
 ### Using modules from the TransIP Collection in your playbooks
 
-It's preferable to use content in this collection using their Fully Qualified Collection Namespace (FQCN), for example: `yo-han.transip.transip_vps`:
+It's preferable to use content in this collection using their Fully Qualified Collection Namespace (FQCN), for example: `yo_han.transip.transip_vps`:
 
 ```yaml
 ---
@@ -44,7 +44,7 @@ It's preferable to use content in this collection using their Fully Qualified Co
 
   task:
     - name: Create a new VPS
-      yo-han.transip.transip_vps:
+      yo_han.transip.transip_vps:
         state: present
         description: "example vps description"
         unique_description: yes
@@ -107,4 +107,4 @@ See [COPYING](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
 [ansible-test]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html
 [ansible-integration-config]: https://docs.ansible.com/ansible/latest/dev_guide/testing_integration.html#integration-config-yml
 [antsibull-changelog]: https://pypi.org/project/antsibull-changelog/
-[ansible-galaxy-transip]: https://galaxy.ansible.com/yo-han/transip
+[ansible-galaxy-transip]: https://galaxy.ansible.com/yo_han/transip

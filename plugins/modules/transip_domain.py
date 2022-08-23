@@ -5,7 +5,7 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
 from email.policy import default
-from ansible_collections.yo-han.transip.plugins.module_utils.transip import TransIPHelper
+from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
 from ansible.module_utils.basic import AnsibleModule
 import traceback
 __metaclass__ = type
@@ -48,13 +48,13 @@ options:
     - The content of the DNS entry. (127.0.0.1 for A, or a domainname for CNAME, etc)
     type: str
 extends_documentation_fragment:
-- yo-han.transip.transip.documentation
+- yo_han.transip.transip.documentation
 '''
 
 EXAMPLES = r'''
 ---
 - name: Create a new DNS entry
-  yo-han.transip.transip_domain:
+  yo_han.transip.transip_domain:
     state: present
     domain: "example.com"
     name: "ansible"
@@ -63,7 +63,7 @@ EXAMPLES = r'''
     register: domain
 
 # - name: Remove a DNS entry
-#     yo-han.transip.transip_domain:
+#     yo_han.transip.transip_domain:
 #     state: absent
 #     domain: "example.com"
 #     name: "ansible"

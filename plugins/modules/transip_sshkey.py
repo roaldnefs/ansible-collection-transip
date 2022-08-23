@@ -4,7 +4,7 @@
 # Copyright: (c) 2020, Roald Nefs <info@roaldnefs.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
-from ansible_collections.yo-han.transip.plugins.module_utils.transip import TransIPHelper
+from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
 from ansible.module_utils.basic import AnsibleModule
 import traceback
 __metaclass__ = type
@@ -37,12 +37,12 @@ options:
     - The SSH key.
     type: str
 extends_documentation_fragment:
-- yo-han.transip.transip.documentation
+- yo_han.transip.transip.documentation
 '''
 
 EXAMPLES = r'''
 - name: Create a new SSH key
-  yo-han.transip.transip_sshkey:
+  yo_han.transip.transip_sshkey:
     state: present
     ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
     description: example
@@ -52,7 +52,7 @@ EXAMPLES = r'''
     msg: "Added SSH-key with fingerprint {{ result.data.sshKey.fingerprint }}"
 
 - name: Delete a SSH key
-  yo-han.transip.transip_sshkey:
+  yo_han.transip.transip_sshkey:
     state: absent
     ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
 '''

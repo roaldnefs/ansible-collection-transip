@@ -4,7 +4,7 @@
 # Copyright: (c) 2022, Johan Kuijt <info@johankuijt.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import absolute_import, division, print_function
-from ansible_collections.yo-han.transip.plugins.module_utils.transip import TransIPHelper
+from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
 from ansible.module_utils.basic import AnsibleModule
 import traceback
 __metaclass__ = type
@@ -52,12 +52,12 @@ options:
     choices: ['end', 'immediately']
     type: str
 extends_documentation_fragment:
-- yo-han.transip.transip.documentation
+- yo_han.transip.transip.documentation
 '''
 
 EXAMPLES = r'''
 - name: Attach VPS to private network
-  yo-han.transip.transip_network:
+  yo_han.transip.transip_network:
     state: present
     description: "my-network"
     unique_description: yes
@@ -66,7 +66,7 @@ EXAMPLES = r'''
   register: result
 
 - name: Detach VPS from a private network
-  yo-han.transip.transip_network:
+  yo_han.transip.transip_network:
     state: absent
     description: "my-network"
     unique_description: yes
