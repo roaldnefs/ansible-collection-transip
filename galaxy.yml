@@ -1,5 +1,5 @@
 ---
-namespace: yo-han
+namespace: yo_han
 name: transip
 version: 0.3.0
 readme: README.md
