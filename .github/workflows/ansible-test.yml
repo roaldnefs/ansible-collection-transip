@@ -7,7 +7,7 @@ on:
     - cron: '0 6 * * *'
 
 env:
-  NAMESPACE: roaldnefs
+  NAMESPACE: yo-han
   COLLECTION_NAME: transip
 
 jobs:
@@ -18,6 +18,9 @@ jobs:
         ansible:
         - stable-2.9
         - stable-2.10
+        - stable-2.11
+        - stable-2.12
+        - stable-2.13
         - devel
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
@@ -41,7 +44,7 @@ jobs:
 
   # Integration tests are disable to run in CI workflow as the integrations
   # tests aren't running with consistent result using the TransIP demo token
-  # specified in tests/integration/integration_config.yml 
+  # specified in tests/integration/integration_config.yml
   # integration:
   #   runs-on: ubuntu-latest
   #   name: I (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }})
