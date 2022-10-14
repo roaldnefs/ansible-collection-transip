@@ -300,7 +300,7 @@ def handle_request(module):
 def main():
     argument_spec = TransIPHelper.transip_argument_spec()
     argument_spec.update(
-        state=dict(choices=["present", "absent"], default="present"),
+        state=dict(choices=["present", "absent"]),
         name=dict(type="str"),
         product_name=dict(type="str"),
         operating_system=dict(type="str"),
