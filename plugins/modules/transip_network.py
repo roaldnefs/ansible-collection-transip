@@ -107,7 +107,7 @@ class TransIPNetwork(object):
 
     def list(self):
         """Returns a list of all Private Neworks."""
-        path = "private-networks"
+        path = "private-networks?pageSize=100"
         response = self.rest.get(path)
 
         if response.status_code == 200:
@@ -151,7 +151,7 @@ class TransIPNetwork(object):
         if self.module.check_mode:
             self.module.exit_json(changed=True)
 
-        path = "private-networks"
+        path = "private-networks?pageSize=100"
 
         data = {"description": self.module.params["description"]}
 
