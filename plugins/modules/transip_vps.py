@@ -22,7 +22,6 @@ options:
   state:
     description:
     - Indicate desired state of the target.
-    default: present
     choices: ['present', 'absent']
     type: str
   name:
