@@ -3,13 +3,7 @@
 
 # Copyright: (c) 2020, Roald Nefs <info@roaldnefs.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
-from __future__ import absolute_import, division, print_function
-from email.policy import default
-from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
-from ansible.module_utils.basic import AnsibleModule
-import traceback
 __metaclass__ = type
-
 
 DOCUMENTATION = r'''
 ---
@@ -139,6 +133,12 @@ data:
     }
   }
 '''
+
+from __future__ import absolute_import, division, print_function
+import traceback
+from ansible.module_utils.basic import AnsibleModule
+from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
+from email.policy import default
 
 
 class TransIPVPSException(Exception):
