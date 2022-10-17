@@ -1,4 +1,0 @@
-plugins/modules/transip_domain.py validate-modules:import-before-documentation # conflicts with linter
-plugins/modules/transip_vps.py validate-modules:import-before-documentation # conflicts with linter
-plugins/modules/transip_network.py validate-modules:import-before-documentation # conflicts with linter
-plugins/modules/transip_sshkey.py validate-modules:import-before-documentation # conflicts with linter
