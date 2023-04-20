@@ -58,7 +58,7 @@ EXAMPLES = r'''
   yo_han.transip.transip_network:
     state: present
     description: "my-network"
-    unique_description: yes
+    unique_description: true
     vps_name: "test-vps"
     access_token: REDACTED
   register: result
@@ -67,7 +67,7 @@ EXAMPLES = r'''
   yo_han.transip.transip_network:
     state: absent
     description: "my-network"
-    unique_description: yes
+    unique_description: true
     vps_name: "test-vps"
     access_token: REDACTED
 '''

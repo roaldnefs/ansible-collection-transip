@@ -74,7 +74,7 @@ EXAMPLES = r'''
   yo_han.transip.transip_vps:
     state: present
     description: "example vps description"
-    unique_description: yes
+    unique_description: true
     product_name: vps-bladevps-x1
     operating_system: ubuntu-18.04
     availability_zone: ams0
