@@ -139,7 +139,6 @@ data:
 import traceback
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
-from email.policy import default
 
 
 class TransIPVPSException(Exception):

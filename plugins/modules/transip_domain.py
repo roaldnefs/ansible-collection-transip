@@ -82,7 +82,6 @@ data:
   ]
 '''
 
-from email.policy import default
 from ansible_collections.yo_han.transip.plugins.module_utils.transip import TransIPHelper
 from ansible.module_utils.basic import AnsibleModule
 import traceback
