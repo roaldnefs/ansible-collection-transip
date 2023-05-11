@@ -14,7 +14,7 @@ module: transip_sshkey
 short_description: Manage TransIP SSH keys
 description:
 - Manage TransIP SSH keys.
-author: "Roald Nefs (@roaldnefs)"
+author: "Johan Kuijt (@yo-han)"
 options:
   state:
     description:
