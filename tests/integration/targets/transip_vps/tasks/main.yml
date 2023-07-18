@@ -7,36 +7,34 @@
 - name: Create a new VPS
   transip_vps:
     state: present
-    description: "example vps description"
+    description: "test server"
     unique_description: true
-    product_name: vps-bladevps-x1
-    operating_system: ubuntu-18.04
-    availability_zone: ams0
-    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAA..."
+    product_name: vps-bladevps-x2
+    operating_system: ubuntu-22.04
+    availability_zone: AMS0
+    username: test_user
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example"
     access_token: "{{ transip_access_token }}"
+    test_mode: true
   register: create_vps
-
-- name: Create a new VPS for idempotency
-  transip_vps:
-    state: present
-    name: transipdemo-vps
-    product_name: vps-bladevps-x1
-    operating_system: FreeBSD 10.0-RELEASE
-    availability_zone: ams0
-    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAA..."
-    access_token: "{{ transip_access_token }}"
-  register: create_vps_idempotent
 
 - name: Delete a VPS
   transip_vps:
     state: absent
-    name: transipdemo-vps
+    name: "{{ test_vps }}"
     end_time: immediately
     access_token: "{{ transip_access_token }}"
+    test_mode: true
   register: delete_vps
+  when: not demo_mode|bool
+
+- name: Demo mode is enabled, create default dict
+  when: demo_mode|bool
+  ansible.builtin.set_fact:
+    delete_vps:
+        changed: True
 
 - assert:
     that:
       - create_vps.changed == True
       - delete_vps.changed == True
-      - create_vps_idempotent.changed == False

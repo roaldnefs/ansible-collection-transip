@@ -18,6 +18,11 @@ options:
       - TransIP access token
     type: str
     aliases: [ api_token ]
+  test_mode:
+    description:
+      - Whether to enable test mode
+    type: bool
+    aliases: [ dry_run, dryrun, testmodus ]
   timeout:
     description:
       - The timeout in seconds used for polling TransIP's API.

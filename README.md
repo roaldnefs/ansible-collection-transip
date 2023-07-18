@@ -1,6 +1,12 @@
 # TransIP Collection
 
-This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible. It was orignally started by [Roald Nefs](https://github.com/roaldnefs/ansible-collection-transip). This is the forked and expended version of the collection.
+[![CI](https://github.com/yo-han/ansible-collection-transip/workflows/CI/badge.svg?event=push)](https://github.com/yo-han/ansible-collection-transip/actions)
+
+This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible.
+
+## Tested with Ansible
+
+Tested with the current Ansible 2.15 release and the current development version of Ansible. Ansible versions before 2.13 are not supported.
 
 ## Included content
 
@@ -24,7 +30,7 @@ You can also include it in a `requirements.yml` file and install it via `ansible
 ---
 collections:
   - name: yo_han.transip
-    version: 0.4.1
+    version: 0.4.2
 ```
 
 ### Using modules from the TransIP Collection in your playbooks

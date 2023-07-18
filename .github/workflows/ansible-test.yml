@@ -1,0 +1,92 @@
+---
+name: CI
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '0 6 * * *'
+
+env:
+  NAMESPACE: yo_han
+  COLLECTION_NAME: transip
+
+jobs:
+  sanity:
+    name: Sanity (Ⓐ${{ matrix.ansible }})
+    strategy:
+      matrix:
+        ansible:
+        - stable-2.13
+        - stable-2.14
+        - stable-2.15
+        - devel
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+
+      - name: Run sanity tests
+        run: ansible-test sanity -v --color
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+  integration:
+    runs-on: ubuntu-latest
+    name: I (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }})
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible:
+          - stable-2.13
+          - stable-2.14
+          - stable-2.15
+          - devel
+        python:
+          - '3.9'
+          - '3.10'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Setup integration_config.yml
+        run: cp tests/integration/integration_config.yml.tpl tests/integration/integration_config.yml
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+
+      # OPTIONAL If your integration test requires Python libraries or modules from other collections
+      # Install them like this
+      # - name: Install collection dependencies
+      #   run: ansible-galaxy collection install ansible.netcommon -p .
+
+      - name: Run integration test
+        run: ansible-test integration -v --color --retry-on-error --continue-on-error --diff --python ${{ matrix.python }} --docker --coverage --allow-unsupported
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      - name: Generate coverage report
+        run: ansible-test coverage xml -v --requirements --group-by command --group-by version
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      # See the reports at https://codecov.io/gh/GITHUBORG/REPONAME
+      # - uses: codecov/codecov-action@v1
+      #   with:
+      #     fail_ci_if_error: false
