@@ -7,7 +7,7 @@ authors:
   - Roald Nefs (github/roaldnefs)
   - Johan Kuijt (github/yo-han)
 description: TransIP Ansible Collection.
-license_file: COPYING
+license_files: COPYING
 tags:
   - transip
   - cloud

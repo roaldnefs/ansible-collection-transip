@@ -1,17 +1,12 @@
 # TransIP Collection
 
-[![CI](https://github.com/yo-han/ansible-collection-transip/workflows/CI/badge.svg?event=push)](https://github.com/yo-han/ansible-collection-transip/actions)
-
 This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible. It was orignally started by [Roald Nefs](https://github.com/roaldnefs/ansible-collection-transip). This is the forked and expended version of the collection.
-
-## Tested with Ansible
-
-Tested with the current Ansible 2.13 release and the current development version of Ansible. Ansible versions before 2.9.10 are not supported.
 
 ## Included content
 
 - transip_sshkey – Manage TransIP SSH keys
 - transip_vps – Create and delete a TransIP VPS
+- transip_vps_os – Install a new OS on a TransIP VPS
 - transip_domain – Create and delete a TransIP DNS entries
 - transip_network – Create and delete a TransIP Private Networks
 
@@ -29,7 +24,7 @@ You can also include it in a `requirements.yml` file and install it via `ansible
 ---
 collections:
   - name: yo_han.transip
-    version: 0.3.0
+    version: 0.4.1
 ```
 
 ### Using modules from the TransIP Collection in your playbooks
@@ -48,8 +43,8 @@ It's preferable to use content in this collection using their Fully Qualified Co
         state: present
         description: "example vps description"
         unique_description: true
-        product_name: vps-bladevps-x1
-        operating_system: ubuntu-18.04
+        product_name: vps-bladevps-x2
+        operating_system: ubuntu-22.04
         availability_zone: ams0
         access_token: REDACTED
       register: result
