@@ -10,6 +10,7 @@
     ssh_pub_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDf2pxWX/yhUBDyk2LPhvRtI0LnVO8PyR5Zt6AHrnhtLGqK+8YG9EMlWbCCWrASR+Q1hFQG example
     description: example
     access_token: "{{ transip_access_token }}"
+    test_mode: "{{ demo_mode|bool }}"
   register: create_ssh_key
 
 - name: Create a new SSH key for idempotency
@@ -19,6 +20,7 @@
     description: example
     access_token: "{{ transip_access_token }}"
   register: create_ssh_key_idempotent
+  when: not demo_mode|bool
 
 - name: Delete a SSH key
   transip_sshkey:
@@ -26,6 +28,7 @@
     fingerprint: "79:07:8c:7c:6c:00:b1:e9:44:4a:bf:e4:1a:fa:88:0d"
     access_token: "{{ transip_access_token }}"
   register: delete_ssh_key
+  when: not demo_mode|bool
 
 - assert:
     that:

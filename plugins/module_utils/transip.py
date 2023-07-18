@@ -43,7 +43,8 @@ class TransIPHelper(object):
         self.baseurl = "https://api.transip.nl/v6"
         self.timeout = module.params.get("timeout")
         self.access_token = module.params.get("access_token")
-        self.headers = {"Authorization": "Bearer {0}".format(self.access_token),
+        self.test_mode = module.params.get("test_mode")
+        self.headers = {"Authorization": f"Bearer {self.access_token}",
                         "Content-type": "application/json"}
 
         # Call the simple test resource on the TransIP API to make sure
@@ -61,12 +62,17 @@ class TransIPHelper(object):
                 required=False,
                 aliases=["api_token"]
             ),
+            test_mode=dict(type='bool', default=False, aliases=[
+                           'dry_run', 'dryrun', 'test-modus']),
             timeout=dict(type='int', default=30),
         )
 
     def send(self, method, path, data=None):
-        url = "{0}/{1}".format(self.baseurl, path)
+        url = f"{self.baseurl}/{path}"
         data = self.module.jsonify(data)
+
+        if (self.test_mode):
+            url = f"{url}?test=1"
 
         resp, info = fetch_url(
             self.module,
