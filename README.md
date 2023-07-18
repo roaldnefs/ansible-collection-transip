@@ -1,5 +1,7 @@
 # TransIP Collection
 
+[![CI](https://github.com/yo-han/ansible-collection-transip/workflows/CI/badge.svg?event=push)](https://github.com/yo-han/ansible-collection-transip/actions)
+
 This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible.
 
 ## Included content
