@@ -141,3 +141,4 @@ cython_debug/
 tests/output/
 changelogs/.plugin-cache.yaml
 *.tar.gz
+tests/integration/integration_config.yml
