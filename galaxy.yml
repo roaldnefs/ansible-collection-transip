@@ -1,13 +1,13 @@
 ---
 namespace: yo_han
 name: transip
-version: 0.3.0
+version: 0.4.1
 readme: README.md
 authors:
   - Roald Nefs (github/roaldnefs)
   - Johan Kuijt (github/yo-han)
 description: TransIP Ansible Collection.
-license_files: COPYING
+license_file: COPYING
 tags:
   - transip
   - cloud
