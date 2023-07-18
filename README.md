@@ -1,6 +1,6 @@
 # TransIP Collection
 
-This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible. It was orignally started by [Roald Nefs](https://github.com/roaldnefs/ansible-collection-transip). This is the forked and expended version of the collection.
+This collection contains modules and plugins to assist in automating [TransIP][transip] infrastructure and API interactions with Ansible.
 
 ## Included content
 
